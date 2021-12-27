@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './calendar.css'
 import { initializeIcons } from '@fluentui/font-icons-mdl2'
-import { DateTime } from 'luxon'
+import moment from 'moment'
 
 // Components
 import Header from './header'
@@ -11,18 +11,12 @@ import Month from './month'
 initializeIcons()
 
 function Calendar() {
-  const [date, setDate] = useState(DateTime.now())
-  const [month, setMonth] = useState(DateTime.now())
-  const [year, setYear] = useState(DateTime.now())
-
-  console.log('date', date)
-  console.log('month', month)
-  console.log('year', year)
+  const [date, setDate] = useState(moment())
   return (
     <div className='container-lg h-100'>
       <div className='calendar'>
-        <Header date={date} month={month} year={year} />
-        <Month />
+        <Header date={date} setDate={setDate} />
+        <Month date={date} />
       </div>
     </div>
   )

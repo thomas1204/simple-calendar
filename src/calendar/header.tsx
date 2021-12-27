@@ -1,10 +1,9 @@
 import React from 'react'
-import { DateTime } from 'luxon'
+import { Moment } from 'moment'
 
 interface HeaderProps {
-  date: DateTime
-  month: DateTime
-  year: DateTime
+  date: Moment
+  setDate: (date: Moment) => void
 }
 
 function Header(props: HeaderProps) {
@@ -21,9 +20,11 @@ function Header(props: HeaderProps) {
           <div className='col-4 text-center'>
             <button type='button' className='btn btn-light mx-1'>
               December
+              <i className='bi bi-chevron-down' style={{ marginLeft: 5 }} />
             </button>
             <button type='button' className='btn btn-light mx-1'>
               2021
+              <i className='bi bi-chevron-down' style={{ marginLeft: 5 }} />
             </button>
           </div>
           <div className='col-4 text-end'>

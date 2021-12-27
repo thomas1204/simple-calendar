@@ -28,21 +28,26 @@ button {
 }
 
 .month {
-	padding-top: 15px;
+	padding-top: 20px;
 }
 
-.month-header .day {
+.days .day {
 	padding: 5px 0;
 	font-weight: 600;
+}
+
+.weeks {
+	padding-top: 10px;
 }
 
 .week .date,
 .week .empty {
 	height: 100px;
 	margin: 1px;
-	padding: 15px;
+	padding: 20px;
 	background-color: #f8f9fa;
 	border-radius: 3px;
+	font-size: 15px;
 }
 
 .week .empty {
