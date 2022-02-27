@@ -1,7 +1,10 @@
 import React from 'react'
+import { Moment } from 'moment'
 
 interface Date_Props {
   date: Number | null
+  currentDate: Moment
+  selectedDate: Moment
 }
 
 function Date(props: Date_Props) {

@@ -3,12 +3,13 @@ import { default as DateComponent } from './date'
 import moment, { Moment } from 'moment'
 
 interface MonthProps {
-  date: Moment
+  selectedDate: Moment
+  currentDate: Moment
 }
 
 function Month(props: MonthProps) {
-  const date = props.date
-  const weeks = getWeeksInMonth(date)
+  const selectedDate = props.selectedDate
+  const weeks = getWeeksInMonth(selectedDate)
   return (
     <div className='row justify-content-center align-items-center'>
       <div className='col-lg-8 col-md-9 col-sm-12 col-xs-12'>
@@ -25,8 +26,8 @@ function Month(props: MonthProps) {
           <div className='weeks'>
             {weeks.map((week, weekIndex) => (
               <div className='week row' key={weekIndex}>
-                {week!.map((day, dayIndex) => (
-                  <DateComponent date={day} key={dayIndex} />
+                {week!.map((date, dayIndex) => (
+                  <DateComponent date={date} key={dayIndex} currentDate={props.currentDate} selectedDate={props.selectedDate} />
                 ))}
               </div>
             ))}
@@ -37,22 +38,21 @@ function Month(props: MonthProps) {
   )
 
   function getWeeksInMonth(date: Moment) {
-    const year = moment(date).year()
-    const month = moment(date).month() + 1
-    // @ts-ignore
-    return Array(new Date(year, month, 0).getDate())
-      .fill(0) // @ts-ignore
-      .map((_, i) => new Date(year, month - 1, i + 1))
-      .map((d, i, a) =>
-        !i && d.getDay()
-          ? [Array(d.getDay()).fill(null), d.getDate()]
-          : d.getDate() === a.length && d.getDay() < 6
-          ? [d.getDate(), Array(6 - d.getDay()).fill(null)]
-          : d.getDate()
-      )
-      .flat(2)
-      .map((d, i, a) => (a.length ? a.splice(0, 7) : null))
-      .filter(w => w)
+    const totalDays = moment(date).daysInMonth()
+    const firstDayOfMonth = moment(date).startOf('month').day()
+    let days = new Array(firstDayOfMonth).fill(null)
+    for (let i = 1; i <= totalDays; i++) {
+      days.push(i)
+    }
+    const lastDayOfMonth = moment(date).endOf('month').day()
+    for (let i = lastDayOfMonth + 1; i <= 6; i++) {
+      days.push(null)
+    }
+    let weeks = []
+    while (days.length) {
+      weeks.push(days.splice(0, 7))
+    }
+    return weeks
   }
 }
 

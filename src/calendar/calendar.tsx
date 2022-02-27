@@ -11,15 +11,28 @@ import Month from './month'
 initializeIcons()
 
 function Calendar() {
-  const [date, setDate] = useState(moment())
+  const [selectedDate, setSelectedDate] = useState(moment())
+  const currentDate = moment()
   return (
     <div className='container-lg h-100'>
       <div className='calendar'>
-        <Header date={date} setDate={setDate} />
-        <Month date={date} />
+        <Header selectedDate={selectedDate} navigateBetweenMonths={navigateBetweenMonths} goToToday={goToToday} />
+        <Month selectedDate={selectedDate} currentDate={currentDate} />
       </div>
     </div>
   )
+
+  function navigateBetweenMonths(prev: Boolean = false) {
+    let currentDate = moment(selectedDate).add(1, 'months')
+    if (prev) {
+      currentDate = moment(selectedDate).subtract(1, 'months')
+    }
+    setSelectedDate(currentDate)
+  }
+
+  function goToToday() {
+    setSelectedDate(moment())
+  }
 }
 
 export default Calendar
